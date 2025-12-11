@@ -24,12 +24,39 @@ export function ContactPageClient({ locale }: ContactPageClientProps) {
     message: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you would send this to an API
-    console.log("Form submitted:", formState);
-    setIsSubmitted(true);
+    setError(null);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        throw new Error(data?.error || "Something went wrong.");
+      }
+
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setError(
+        locale === "de"
+          ? "Deine Nachricht konnte nicht gesendet werden. Bitte versuche es später erneut."
+          : "Your message could not be sent. Please try again later."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -151,9 +178,19 @@ export function ContactPageClient({ locale }: ContactPageClientProps) {
                   />
                 </div>
 
-                <Button type="submit" className="w-full">
+                {error && (
+                  <p className="text-sm text-red-600 dark:text-red-400">
+                    {error}
+                  </p>
+                )}
+
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
                   <Send className="mr-2 h-4 w-4" />
-                  {dict.contact.formSubmit}
+                  {isSubmitting
+                    ? locale === "de"
+                      ? "Wird gesendet..."
+                      : "Sending..."
+                    : dict.contact.formSubmit}
                 </Button>
               </form>
             )}

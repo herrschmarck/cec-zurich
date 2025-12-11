@@ -56,14 +56,11 @@ export function Footer({ locale, dict }: FooterProps) {
             </nav>
           </div>
 
-          {/* Contact */}
+          {/* Location */}
           <div className="space-y-4">
             <h4 className="text-sm font-semibold text-zen-900 dark:text-zen-50">
               Zürich, Switzerland
             </h4>
-            <p className="text-sm text-zen-600 dark:text-zen-400">
-              hello@cec-zurich.ch
-            </p>
           </div>
         </div>
 
