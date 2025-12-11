@@ -3,12 +3,12 @@ import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { resources, ResourceType } from "@/lib/data/resources";
 import { ResourceCard } from "@/components/resources/resource-card";
+import { SITE_URL, SITE_NAME } from "@/lib/config";
 
 interface ResourcesPageProps {
   params: { locale: Locale };
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export async function generateMetadata({
   params,
@@ -33,7 +33,7 @@ export async function generateMetadata({
       description,
       url,
       type: "website",
-      siteName: "Consciousness Explorers Club Zürich",
+      siteName: SITE_NAME,
       locale,
     },
   };

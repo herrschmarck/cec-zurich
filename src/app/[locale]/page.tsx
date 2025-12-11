@@ -4,12 +4,12 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { Hero } from "@/components/home/hero";
 import { AboutSection } from "@/components/home/about-section";
 import { UpcomingEvents } from "@/components/home/upcoming-events";
+import { SITE_URL, SITE_NAME } from "@/lib/config";
 
 interface HomePageProps {
   params: { locale: Locale };
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export async function generateMetadata({ params }: HomePageProps): Promise<Metadata> {
   const locale = params.locale;
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: HomePageProps): Promise<Metad
       description,
       url,
       type: "website",
-      siteName: "Consciousness Explorers Club Zürich",
+      siteName: SITE_NAME,
       locale,
     },
   };

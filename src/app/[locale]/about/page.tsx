@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { Check } from "lucide-react";
+import { SITE_URL, SITE_NAME } from "@/lib/config";
 
 interface AboutPageProps {
   params: { locale: Locale };
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export async function generateMetadata({ params }: AboutPageProps): Promise<Metadata> {
   const locale = params.locale;
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: AboutPageProps): Promise<Meta
       description,
       url,
       type: "website",
-      siteName: "Consciousness Explorers Club Zürich",
+      siteName: SITE_NAME,
       locale,
     },
   };

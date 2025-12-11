@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Locale } from "@/i18n.config";
 import { ContactPageClient } from "@/components/contact/contact-page-client";
+import { SITE_URL, SITE_NAME } from "@/lib/config";
 
 interface ContactPageProps {
   params: { locale: Locale };
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export async function generateMetadata({ params }: ContactPageProps): Promise<Metadata> {
   const locale = params.locale;
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: ContactPageProps): Promise<Me
       description,
       url,
       type: "website",
-      siteName: "Consciousness Explorers Club Zürich",
+      siteName: SITE_NAME,
       locale,
     },
   };
