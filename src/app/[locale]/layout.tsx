@@ -7,6 +7,7 @@ import { Providers } from "@/components/layout/providers";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -48,6 +49,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
           </div>
         </Providers>
         {process.env.NODE_ENV === "production" && <Analytics />}
+        <SpeedInsights />
       </body>
     </html>
   );
