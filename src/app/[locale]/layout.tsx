@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   description:
     "Meditation, Erforschung und Austausch in einer offenen, neugierigen Community in Zürich.",
   keywords: ["meditation", "mindfulness", "consciousness", "zürich", "community"],
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export async function generateStaticParams() {

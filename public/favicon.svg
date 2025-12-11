@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Enso circle - Zen symbol for enlightenment -->
+  <circle cx="16" cy="16" r="14" fill="none" stroke="#44403c" stroke-width="3" stroke-linecap="round" stroke-dasharray="82 6"/>
+  <!-- Small dot representing awareness/consciousness -->
+  <circle cx="16" cy="16" r="2.5" fill="#44403c"/>
+</svg>
