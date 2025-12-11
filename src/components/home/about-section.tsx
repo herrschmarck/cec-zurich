@@ -54,10 +54,10 @@ export function AboutSection({ locale, dict }: AboutSectionProps) {
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="flex gap-4 rounded-xl border border-zen-200/60 bg-white/80 p-4 backdrop-blur dark:border-zen-800/60 dark:bg-zen-900/50"
+                className="flex items-stretch gap-4 rounded-xl border border-zen-200/60 bg-white/80 p-4 backdrop-blur dark:border-zen-800/60 dark:bg-zen-900/50"
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-forest-100 text-forest-700 dark:bg-forest-900/30 dark:text-forest-300">
-                  <feature.icon className="h-5 w-5" />
+                <div className="flex h-full w-12 shrink-0 items-center justify-center rounded-lg bg-forest-100 text-forest-700 dark:bg-forest-900/30 dark:text-forest-300">
+                  <feature.icon className="h-8 w-8" />
                 </div>
                 <div>
                   <h3 className="font-medium text-zen-900 dark:text-zen-50">
