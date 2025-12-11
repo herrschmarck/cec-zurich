@@ -10,6 +10,7 @@ Eine moderne, mehrsprachige Website für den Consciousness Explorers Club Züric
 - **shadcn/ui** Komponenten
 - **next-themes** für Dark Mode
 - **lucide-react** für Icons
+ - **Vercel Analytics** für schlankes Tracking im Production-Deployment
 
 ## Features
 
@@ -123,6 +124,10 @@ Bearbeite die Farbpalette in `tailwind.config.ts`.
 
 ### Bilder hinzufügen
 Lege Bilder in `public/images/` ab und referenziere sie in den Komponenten.
+
+### Analytics
+
+Vercel Analytics ist integriert und wird automatisch im Production-Deployment (z.B. auf Vercel) aktiv. Im lokalen Development (`npm run dev`) werden keine Analytics-Daten erfasst.
 
 ## Deployment
 

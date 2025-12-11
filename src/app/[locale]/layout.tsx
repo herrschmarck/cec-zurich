@@ -6,6 +6,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { Providers } from "@/components/layout/providers";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -46,6 +47,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
             <Footer locale={params.locale} dict={dict} />
           </div>
         </Providers>
+        {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>
   );
