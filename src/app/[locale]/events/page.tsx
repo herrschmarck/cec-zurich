@@ -1,65 +1,45 @@
-"use client";
-
-import { useState } from "react";
-import { useParams } from "next/navigation";
+import type { Metadata } from "next";
 import { Locale } from "@/i18n.config";
-import { EventCard, EventType } from "@/components/events/event-card";
-import { EventFilter } from "@/components/events/event-filter";
-import { events } from "@/lib/data/events";
-import { de } from "@/lib/i18n/dictionaries/de";
-import { en } from "@/lib/i18n/dictionaries/en";
+import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { EventsPageClient } from "@/components/events/events-page-client";
 
-export default function EventsPage() {
-  const params = useParams();
-  const locale = params.locale as Locale;
-  const dict = locale === "en" ? en : de;
+interface EventsPageProps {
+  params: { locale: Locale };
+}
 
-  const [activeFilter, setActiveFilter] = useState<EventType | "all">("all");
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
-  const filteredEvents =
-    activeFilter === "all"
-      ? events
-      : events.filter((event) => event.type === activeFilter);
+export async function generateMetadata({ params }: EventsPageProps): Promise<Metadata> {
+  const locale = params.locale;
+  const title =
+    locale === "de"
+      ? "Events – Meditation, Workshops & Retreats in Zürich"
+      : "Events – Meditation, workshops & retreats in Zurich";
+  const description =
+    locale === "de"
+      ? "Übersicht über kommende Meditationen, Workshops, Retreats und Community-Events des Consciousness Explorers Club Zürich."
+      : "Overview of upcoming meditations, workshops, retreats and community events of the Consciousness Explorers Club Zurich.";
+  const url = `${SITE_URL}/${locale}/events`;
 
-  return (
-    <div className="mx-auto max-w-6xl px-4 py-16 md:py-24">
-      {/* Header */}
-      <header className="mb-12">
-        <h1 className="text-3xl font-bold tracking-tight text-zen-900 dark:text-zen-50 md:text-4xl">
-          {dict.events.title}
-        </h1>
-        <p className="mt-4 text-lg text-zen-600 dark:text-zen-300">
-          {dict.events.subtitle}
-        </p>
-      </header>
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "website",
+      siteName: "Consciousness Explorers Club Zürich",
+      locale,
+    },
+  };
+}
 
-      {/* Filter */}
-      <div className="mb-8">
-        <EventFilter
-          activeFilter={activeFilter}
-          onFilterChange={setActiveFilter}
-          labels={{
-            all: dict.events.filterAll,
-            meditation: dict.events.filterMeditation,
-            workshop: dict.events.filterWorkshop,
-            retreat: dict.events.filterRetreat,
-            community: dict.events.filterCommunity,
-          }}
-        />
-      </div>
+export default async function EventsPage({ params }: EventsPageProps) {
+  const dict = await getDictionary(params.locale);
 
-      {/* Events Grid */}
-      {filteredEvents.length > 0 ? (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {filteredEvents.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
-        </div>
-      ) : (
-        <div className="rounded-xl border border-zen-200/60 bg-white/80 p-12 text-center backdrop-blur dark:border-zen-800/60 dark:bg-zen-900/50">
-          <p className="text-zen-600 dark:text-zen-400">{dict.events.noEvents}</p>
-        </div>
-      )}
-    </div>
-  );
+  return <EventsPageClient locale={params.locale} dict={dict} />;
 }

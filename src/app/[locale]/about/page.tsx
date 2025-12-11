@@ -1,9 +1,41 @@
+import type { Metadata } from "next";
 import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { Check } from "lucide-react";
 
 interface AboutPageProps {
   params: { locale: Locale };
+}
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+export async function generateMetadata({ params }: AboutPageProps): Promise<Metadata> {
+  const locale = params.locale;
+  const title =
+    locale === "de"
+      ? "Über den Consciousness Explorers Club Zürich"
+      : "About the Consciousness Explorers Club Zurich";
+  const description =
+    locale === "de"
+      ? "Lerne die Praxis, Werte und Community des Consciousness Explorers Club Zürich kennen. Offen, nicht-dogmatisch, neugierig."
+      : "Learn about the practice, values, and community of the Consciousness Explorers Club Zurich. Open, non-dogmatic, curious.";
+  const url = `${SITE_URL}/${locale}/about`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "website",
+      siteName: "Consciousness Explorers Club Zürich",
+      locale,
+    },
+  };
 }
 
 export default async function AboutPage({ params }: AboutPageProps) {

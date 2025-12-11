@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { resources, ResourceType } from "@/lib/data/resources";
@@ -5,6 +6,37 @@ import { ResourceCard } from "@/components/resources/resource-card";
 
 interface ResourcesPageProps {
   params: { locale: Locale };
+}
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+export async function generateMetadata({
+  params,
+}: ResourcesPageProps): Promise<Metadata> {
+  const locale = params.locale;
+  const dict = await getDictionary(locale);
+  const title =
+    locale === "de"
+      ? "Ressourcen für deine Meditationspraxis"
+      : "Resources for your meditation practice";
+  const description = dict.resources.subtitle.slice(0, 160);
+  const url = `${SITE_URL}/${locale}/resources`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "website",
+      siteName: "Consciousness Explorers Club Zürich",
+      locale,
+    },
+  };
 }
 
 export default async function ResourcesPage({ params }: ResourcesPageProps) {
